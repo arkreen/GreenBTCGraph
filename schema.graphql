@@ -1,0 +1,11 @@
+type GreenBTCGlobal @entity {
+  id:             ID!
+  totalNFT:       BigInt!
+}
+
+type GreenBTCNFTInfo @entity {
+  id:             ID!
+  Owner:          String!
+  Transaction:    String!
+  timeLastTx:     String!
+}

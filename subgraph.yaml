@@ -1,0 +1,27 @@
+specVersion: 0.0.1
+description: Make BTC Green 
+repository: https://github.com/arkreen/GreenBTCGraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: HskGBTC
+    network: mumbai
+    source:
+      address: '0xDe8e59dAB27EB97b2267d4230f8FE713A637e03c'
+      abi: HskGBTC
+      startBlock: 32728060
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/core.ts
+      entities:
+        - GreenBTCGlobal
+        - GreenBTCNFTInfo
+      abis:
+        - name: HskGBTC
+          file: ./abis/HashKeyESGBTC.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer          
