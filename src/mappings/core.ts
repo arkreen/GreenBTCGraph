@@ -1,10 +1,11 @@
 /* eslint-disable prefer-const */
-import { BigInt } from '@graphprotocol/graph-ts'
+import { BigInt, log } from '@graphprotocol/graph-ts'
 import { GreenBTCGlobal, GreenBTCNFTInfo } from '../types/schema'
 
 import { Transfer } from '../types/HskGBTC/HskGBTC'
 
 export let ZERO_BI = BigInt.fromI32(0)
+export let ONE_BI = BigInt.fromI32(1)
 const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
 export function handleTransfer(event: Transfer): void {
@@ -16,18 +17,32 @@ export function handleTransfer(event: Transfer): void {
     greenBTCGlobal.save()
   }
 
-  let from = event.params.from.toString()
-  if(from !== ADDRESS_ZERO) return
+  let from = event.params.from.toHexString()
+  if(from != ADDRESS_ZERO) {
+    log.error('From not zero: {} {} {}', [event.params.from.toHexString(), event.params.to.toHexString(), event.params.tokenId.toString()])
+    return
+  }
 
   let to = event.params.to
-  if(!to) return
-  if(to.toString() === ADDRESS_ZERO) return
+  if((to===null) || to.toHexString() == ADDRESS_ZERO) {
+    log.error('To is zero: {} {} {} ', [event.params.from.toHexString(), event.params.to.toHexString(), event.params.tokenId.toString()])
+    return
+  }
 
   let tokenId = event.params.tokenId.toString()
-  let greenBTCNFT = new GreenBTCNFTInfo(tokenId)
-  greenBTCNFT.Owner = to.toString()
-  greenBTCNFT.Transaction = event.transaction.hash.toHexString()
-  greenBTCNFT.timeLastTx = event.block.timestamp.toString()
+  let greenBTCNFT = GreenBTCNFTInfo.load(tokenId)
 
-  greenBTCNFT.save()
+  if(greenBTCNFT=== null) {
+    let greenBTCNFT = new GreenBTCNFTInfo(tokenId)
+    greenBTCNFT.Owner = to.toHexString()
+    greenBTCNFT.Transaction = event.transaction.hash.toHexString()
+    greenBTCNFT.timeLastTx = event.block.timestamp.toString()
+    greenBTCNFT.save()
+  } else {
+    log.error('Repeated: {} {} {} ', [event.params.from.toHexString(), event.params.to.toHexString(), event.params.tokenId.toString()])
+    return
+  }
+
+  greenBTCGlobal.totalNFT = greenBTCGlobal.totalNFT.plus(ONE_BI) 
+  greenBTCGlobal.save()
 }

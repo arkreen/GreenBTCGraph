@@ -1,4 +1,4 @@
-specVersion: 0.0.1
+specVersion: 0.0.2
 description: Make BTC Green 
 repository: https://github.com/arkreen/GreenBTCGraph
 schema:
@@ -10,7 +10,7 @@ dataSources:
     source:
       address: '0xDe8e59dAB27EB97b2267d4230f8FE713A637e03c'
       abi: HskGBTC
-      startBlock: 32728060
+      startBlock: 32728000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
