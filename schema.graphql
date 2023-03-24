@@ -5,7 +5,8 @@ type GreenBTCGlobal @entity {
 
 type GreenBTCNFTInfo @entity {
   id:             ID!
-  Owner:          String!
-  Transaction:    String!
-  timeLastTx:     String!
+  owner:          String!
+  hashTrx:        String!
+  timeTrx:        String!
+  blockHeight:    String!
 }

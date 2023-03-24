@@ -8,9 +8,9 @@ dataSources:
     name: HskGBTC
     network: mumbai
     source:
-      address: '0xDe8e59dAB27EB97b2267d4230f8FE713A637e03c'
+      address: '0x785dCa2Ca9a51513da1fef9F70E6B6ab02896F67'
       abi: HskGBTC
-      startBlock: 32728000
+      startBlock:  33104600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

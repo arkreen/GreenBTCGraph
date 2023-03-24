@@ -34,9 +34,10 @@ export function handleTransfer(event: Transfer): void {
 
   if(greenBTCNFT=== null) {
     let greenBTCNFT = new GreenBTCNFTInfo(tokenId)
-    greenBTCNFT.Owner = to.toHexString()
-    greenBTCNFT.Transaction = event.transaction.hash.toHexString()
-    greenBTCNFT.timeLastTx = event.block.timestamp.toString()
+    greenBTCNFT.owner = to.toHexString()
+    greenBTCNFT.hashTrx = event.transaction.hash.toHexString()
+    greenBTCNFT.timeTrx = event.block.timestamp.toString()
+    greenBTCNFT.blockHeight = event.block.number.toString()
     greenBTCNFT.save()
   } else {
     log.error('Repeated: {} {} {} ', [event.params.from.toHexString(), event.params.to.toHexString(), event.params.tokenId.toString()])
