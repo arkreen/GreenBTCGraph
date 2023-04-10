@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: HskGBTC
-    network: mumbai
+    network: matic
     source:
-      address: '0x785dCa2Ca9a51513da1fef9F70E6B6ab02896F67'
+      address: '0xfe9341218c7Fcb6DA1eC131a72f914B7C724F200'
       abi: HskGBTC
-      startBlock:  33104600
+      startBlock:  41158870
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
